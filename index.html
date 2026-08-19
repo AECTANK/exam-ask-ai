@@ -29,6 +29,8 @@
       --ai-bubble: #ffffff;
 
       --soft-green: #edf9f5;
+
+      --danger: #c62828;
     }
 
     * {
@@ -275,7 +277,13 @@
       color: #98a2b3;
 
       font-size: 11px;
+      line-height: 1.5;
       text-align: center;
+    }
+
+    .status.error {
+      color: var(--danger);
+      font-weight: 700;
     }
 
 
@@ -341,6 +349,11 @@
       transform: scale(0.96);
     }
 
+    .image-button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
 
     /* ============================================================
        INPUT
@@ -384,6 +397,12 @@
       color: #98a2b3;
     }
 
+    .question-input:disabled {
+      background: #eef1f5;
+      color: #98a2b3;
+      cursor: not-allowed;
+    }
+
 
     /* ============================================================
        SEND BUTTON
@@ -414,6 +433,11 @@
 
     .send-button:active {
       transform: scale(0.96);
+    }
+
+    .send-button:disabled {
+      background: #a8b3c5;
+      cursor: not-allowed;
     }
 
 
@@ -568,6 +592,7 @@
         type="button"
         aria-label="拍照或上傳圖片"
         title="拍照或上傳圖片"
+        disabled
       >
         📷
       </button>
@@ -580,7 +605,8 @@
           class="question-input"
           rows="1"
           maxlength="1000"
-          placeholder="輸入你的問題……"
+          placeholder="正在確認身份……"
+          disabled
         ></textarea>
 
       </div>
@@ -591,6 +617,7 @@
         class="send-button"
         type="button"
         aria-label="送出"
+        disabled
       >
         ➤
       </button>
@@ -612,7 +639,24 @@
     const LIFF_ID =
       "2011171161-2TM6bcRg";
 
+
+    // ============================================================
+    // SUPABASE
+    // ============================================================
+
+    const GET_ASK_AI_USER_URL =
+      "https://xbitdnrjiqlosfkzegiz.supabase.co/functions/v1/get-ask-ai-user";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_VtPQzTC8Cw-ccxC5bSzIuw_nHVbTO3Q";
+
+
+    // ============================================================
+    // STATE
+    // ============================================================
+
     let liffReady = false;
+    let currentUser = null;
 
 
     // ============================================================
@@ -633,6 +677,43 @@
 
     const statusText =
       document.getElementById("statusText");
+
+
+    // ============================================================
+    // UI STATE
+    // ============================================================
+
+    function enableComposer() {
+
+      questionInput.disabled = false;
+      sendButton.disabled = false;
+      imageButton.disabled = false;
+
+      questionInput.placeholder =
+        "輸入你的問題……";
+    }
+
+
+    function disableComposer(message) {
+
+      questionInput.disabled = true;
+      sendButton.disabled = true;
+      imageButton.disabled = true;
+
+      questionInput.placeholder =
+        message || "目前無法使用";
+    }
+
+
+    function showStatus(message, isError = false) {
+
+      statusText.textContent = message;
+
+      statusText.classList.toggle(
+        "error",
+        isError
+      );
+    }
 
 
     // ============================================================
@@ -675,21 +756,104 @@
 
 
     // ============================================================
-    // LIFF
+    // GET ASK AI USER
+    // ============================================================
+
+    async function loadAskAiUser(idToken) {
+
+      const response = await fetch(
+        GET_ASK_AI_USER_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_PUBLISHABLE_KEY,
+
+            "Authorization":
+              `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          },
+
+          body: JSON.stringify({
+            id_token: idToken,
+          }),
+        }
+      );
+
+
+      const responseText =
+        await response.text();
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(responseText);
+
+      } catch {
+
+        throw new Error(
+          [
+            "身份後端回傳不是有效 JSON。",
+            "",
+            `HTTP：${response.status}`,
+            "",
+            responseText.slice(0, 800),
+          ].join("\n")
+        );
+      }
+
+
+      if (
+        !response.ok ||
+        result.success !== true
+      ) {
+
+        throw new Error(
+          result.message ||
+          result.error ||
+          `身份確認失敗，HTTP ${response.status}`
+        );
+      }
+
+
+      return result.user;
+    }
+
+
+    // ============================================================
+    // LIFF INITIALIZATION
     // ============================================================
 
     async function initializeLiff() {
 
+      disableComposer(
+        "正在確認身份……"
+      );
+
+
       if (!window.liff) {
 
-        statusText.textContent =
-          "LIFF SDK 載入失敗";
+        showStatus(
+          "LIFF SDK 載入失敗",
+          true
+        );
 
         return;
       }
 
 
       try {
+
+        // ----------------------------------------------------------
+        // 1. 初始化 LIFF
+        // ----------------------------------------------------------
 
         await liff.init({
           liffId: LIFF_ID,
@@ -699,25 +863,114 @@
         liffReady = true;
 
 
-        statusText.textContent =
-          liff.isInClient()
-            ? "LIFF 已連線"
-            : "目前使用瀏覽器測試";
+        // ----------------------------------------------------------
+        // 2. 確認 LINE Login
+        // ----------------------------------------------------------
+
+        if (!liff.isLoggedIn()) {
+
+          showStatus(
+            "正在登入 LINE……"
+          );
+
+          liff.login();
+
+          return;
+        }
+
+
+        // ----------------------------------------------------------
+        // 3. 取得 ID Token
+        // ----------------------------------------------------------
+
+        const idToken =
+          liff.getIDToken();
+
+
+        if (!idToken) {
+
+          throw new Error(
+            "無法取得 LINE ID Token"
+          );
+        }
+
+
+        showStatus(
+          "正在確認使用者身份……"
+        );
+
+
+        // ----------------------------------------------------------
+        // 4. Edge 驗證 LINE 身份 + 查 students
+        // ----------------------------------------------------------
+
+        currentUser =
+          await loadAskAiUser(
+            idToken
+          );
+
+
+        // ----------------------------------------------------------
+        // 5. 顯示身份
+        // ----------------------------------------------------------
+
+        const roleText =
+          currentUser.role === "teacher"
+            ? "老師"
+            : "學生";
+
+
+        const displayName =
+          currentUser.nickname ||
+          currentUser.full_name ||
+          "使用者";
+
+
+        showStatus(
+          `LIFF 已連線｜${roleText}：${displayName}`
+        );
+
+
+        console.log(
+          "Ask AI user:",
+          currentUser
+        );
+
+
+        // ----------------------------------------------------------
+        // 6. 身份成功後才開放輸入
+        // ----------------------------------------------------------
+
+        enableComposer();
 
 
       } catch (error) {
 
         liffReady = false;
+        currentUser = null;
 
 
         console.error(
-          "LIFF 初始化失敗：",
+          "Ask AI 身份初始化失敗：",
           error
         );
 
 
-        statusText.textContent =
-          "LIFF 初始化失敗";
+        const message =
+          error instanceof Error
+            ? error.message
+            : String(error);
+
+
+        showStatus(
+          `身份確認失敗：${message}`,
+          true
+        );
+
+
+        disableComposer(
+          "身份確認失敗"
+        );
       }
     }
 
@@ -727,6 +980,16 @@
     // ============================================================
 
     function sendTestMessage() {
+
+      if (!currentUser) {
+
+        alert(
+          "尚未完成身份確認。"
+        );
+
+        return;
+      }
+
 
       const text =
         questionInput.value.trim();
@@ -750,7 +1013,7 @@
 
         addMessage(
           "ai",
-          "這裡目前是 UI 測試版。下一步接上 ask-ai Edge Function 後，我就會真的回答你。"
+          "這裡目前是 UI 測試版。身份驗證已經接通；下一步接上 ask-ai Edge Function 後，我就會真的回答你。"
         );
 
       }, 350);
@@ -787,6 +1050,16 @@
     imageButton.addEventListener(
       "click",
       () => {
+
+        if (!currentUser) {
+
+          alert(
+            "尚未完成身份確認。"
+          );
+
+          return;
+        }
+
 
         alert(
           "圖片功能下一階段會支援：\n\n📷 直接拍照\n🖼️ 從相簿選擇題目"
