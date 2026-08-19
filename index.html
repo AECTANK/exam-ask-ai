@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <title>會考問 AI</title>
+
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    :root {
+      --primary: #0f9f73;
+      --primary-dark: #087a59;
+      --background: #f3f6fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #d9e0ea;
+      --user-bubble: #dff7ed;
+      --ai-bubble: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang TC",
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 760px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding:
+        calc(14px + env(safe-area-inset-top))
+        12px
+        calc(92px + env(safe-area-inset-bottom));
+    }
+
+    .header {
+      padding: 8px 4px 14px;
+    }
+
+    .header-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 850;
+    }
+
+    .header-subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .chat-area {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message-row {
+      display: flex;
+      width: 100%;
+    }
+
+    .message-row.ai {
+      justify-content: flex-start;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      max-width: 84%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      line-height: 1.65;
+      font-size: 16px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .message-row.ai .bubble {
+      background: var(--ai-bubble);
+      border: 1px solid var(--border);
+      border-top-left-radius: 6px;
+    }
+
+    .message-row.user .bubble {
+      background: var(--user-bubble);
+      border: 1px solid #b9ead8;
+      border-top-right-radius: 6px;
+    }
+
+    .composer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding:
+        10px
+        12px
+        calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .composer-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .image-button,
+    .send-button {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 14px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .image-button {
+      background: #eef1f5;
+    }
+
+    .send-button {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .input-wrap {
+      flex: 1;
+    }
+
+    .question-input {
+      width: 100%;
+      min-height: 48px;
+      max-height: 120px;
+      resize: none;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+      font: inherit;
+      line-height: 1.45;
+      background: #ffffff;
+    }
+
+    .question-input:focus {
+      border-color: var(--primary);
+    }
+
+    .status {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <h1 class="header-title">🤖 會考問 AI</h1>
+
+      <div class="header-subtitle">
+        國中 7～9 年級五科專用。可以直接打字，之後也可以拍照或上傳題目。
+      </div>
+    </header>
+
+    <section id="chatArea" class="chat-area">
+      <div class="message-row ai">
+        <div class="bubble">
+          有題目就問我吧！
+
+          國文、英文、數學、自然、社會都可以。
+        </div>
+      </div>
+    </section>
+
+    <div id="statusText" class="status">
+      正在初始化 LIFF……
+    </div>
+  </main>
+
+  <div class="composer">
+    <div class="composer-inner">
+      <button
+        id="imageButton"
+        class="image-button"
+        type="button"
+        aria-label="上傳圖片"
+      >
+        📷
+      </button>
+
+      <div class="input-wrap">
+        <textarea
+          id="questionInput"
+          class="question-input"
+          rows="1"
+          maxlength="1000"
+          placeholder="輸入你的問題……"
+        ></textarea>
+      </div>
+
+      <button
+        id="sendButton"
+        class="send-button"
+        type="button"
+        aria-label="送出"
+      >
+        ➤
+      </button>
+    </div>
+  </div>
+
+  <script>
+    "use strict";
+
+    // 先暫時沿用每日練習 LIFF ID 做頁面測試。
+    // 下一步我們會為 exam-ask-ai 建立自己的 LIFF ID。
+    const LIFF_ID = "2010921992-NsV1lmUe";
+
+    let liffReady = false;
+
+    const chatArea = document.getElementById("chatArea");
+    const questionInput = document.getElementById("questionInput");
+    const sendButton = document.getElementById("sendButton");
+    const imageButton = document.getElementById("imageButton");
+    const statusText = document.getElementById("statusText");
+
+    function addMessage(role, text) {
+      const row = document.createElement("div");
+      row.className = `message-row ${role}`;
+
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = text;
+
+      row.appendChild(bubble);
+      chatArea.appendChild(row);
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+
+    async function initializeLiff() {
+      if (!window.liff) {
+        statusText.textContent = "LIFF SDK 載入失敗";
+        return;
+      }
+
+      try {
+        await liff.init({ liffId: LIFF_ID });
+        liffReady = true;
+
+        statusText.textContent = liff.isInClient()
+          ? "LIFF 已連線"
+          : "目前使用瀏覽器測試";
+      } catch (error) {
+        liffReady = false;
+        console.error("LIFF 初始化失敗：", error);
+        statusText.textContent = "LIFF 初始化失敗";
+      }
+    }
+
+    sendButton.addEventListener("click", () => {
+      const text = questionInput.value.trim();
+
+      if (!text) return;
+
+      addMessage("user", text);
+      questionInput.value = "";
+
+      window.setTimeout(() => {
+        addMessage(
+          "ai",
+          "這裡目前是 UI 測試版。下一步接上 ask-ai Edge Function 後，我就會真的回答你。"
+        );
+      }, 350);
+    });
+
+    questionInput.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        sendButton.click();
+      }
+    });
+
+    imageButton.addEventListener("click", () => {
+      alert("圖片功能下一階段再接。");
+    });
+
+    window.addEventListener("DOMContentLoaded", initializeLiff);
+  </script>
+</body>
+</html>
