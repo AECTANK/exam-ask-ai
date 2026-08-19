@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -67,7 +68,7 @@
       margin-top: 6px;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .chat-area {
@@ -91,9 +92,9 @@
 
     .bubble {
       max-width: 84%;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border-radius: 16px;
-      line-height: 1.65;
+      line-height: 1.7;
       font-size: 16px;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
@@ -155,6 +156,10 @@
       font-weight: 800;
     }
 
+    .send-button:hover {
+      background: var(--primary-dark);
+    }
+
     .input-wrap {
       flex: 1;
     }
@@ -192,41 +197,60 @@
 
 <body>
   <main class="page">
+
     <header class="header">
-      <h1 class="header-title">🤖 會考問 AI</h1>
+      <h1 class="header-title">
+        🤖 會考問 AI
+      </h1>
 
       <div class="header-subtitle">
-        國中 7～9 年級五科專用。可以直接打字，之後也可以拍照或上傳題目。
+        國中 7～9 年級五科專用
       </div>
     </header>
 
-    <section id="chatArea" class="chat-area">
-      <div class="message-row ai">
-        <div class="bubble">
-          有題目就問我吧！
+    <section
+      id="chatArea"
+      class="chat-area"
+    >
 
-          國文、英文、數學、自然、社會都可以。
-        </div>
+      <div class="message-row ai">
+        <div class="bubble">有題目就問我吧！
+
+可以直接輸入文字，也可以拍照或從相簿上傳題目。
+
+國文、英文、數學、自然、社會都可以。
+
+一次一題，我會比較容易看懂喔！</div>
       </div>
+
     </section>
 
-    <div id="statusText" class="status">
+    <div
+      id="statusText"
+      class="status"
+    >
       正在初始化 LIFF……
     </div>
+
   </main>
 
+
   <div class="composer">
+
     <div class="composer-inner">
+
       <button
         id="imageButton"
         class="image-button"
         type="button"
-        aria-label="上傳圖片"
+        aria-label="拍照或上傳圖片"
+        title="拍照或上傳圖片"
       >
         📷
       </button>
 
       <div class="input-wrap">
+
         <textarea
           id="questionInput"
           class="question-input"
@@ -234,6 +258,7 @@
           maxlength="1000"
           placeholder="輸入你的問題……"
         ></textarea>
+
       </div>
 
       <button
@@ -244,34 +269,73 @@
       >
         ➤
       </button>
+
     </div>
+
   </div>
+
 
   <script>
     "use strict";
 
-    // 先暫時沿用每日練習 LIFF ID 做頁面測試。
-    // 下一步我們會為 exam-ask-ai 建立自己的 LIFF ID。
+    // ============================================================
+    // LIFF
+    // ============================================================
+
+    // 目前先沿用每日練習 LIFF ID 做 UI 測試。
+    // 下一階段會建立「會考問 AI」專用 LIFF ID。
     const LIFF_ID = "2010921992-NsV1lmUe";
 
     let liffReady = false;
 
-    const chatArea = document.getElementById("chatArea");
-    const questionInput = document.getElementById("questionInput");
-    const sendButton = document.getElementById("sendButton");
-    const imageButton = document.getElementById("imageButton");
-    const statusText = document.getElementById("statusText");
+
+    // ============================================================
+    // DOM
+    // ============================================================
+
+    const chatArea =
+      document.getElementById("chatArea");
+
+    const questionInput =
+      document.getElementById("questionInput");
+
+    const sendButton =
+      document.getElementById("sendButton");
+
+    const imageButton =
+      document.getElementById("imageButton");
+
+    const statusText =
+      document.getElementById("statusText");
+
+
+    // ============================================================
+    // Chat UI
+    // ============================================================
 
     function addMessage(role, text) {
-      const row = document.createElement("div");
-      row.className = `message-row ${role}`;
 
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.textContent = text;
+      const row =
+        document.createElement("div");
+
+      row.className =
+        `message-row ${role}`;
+
+
+      const bubble =
+        document.createElement("div");
+
+      bubble.className =
+        "bubble";
+
+      bubble.textContent =
+        text;
+
 
       row.appendChild(bubble);
+
       chatArea.appendChild(row);
+
 
       window.scrollTo({
         top: document.body.scrollHeight,
@@ -279,57 +343,137 @@
       });
     }
 
+
+    // ============================================================
+    // LIFF 初始化
+    // ============================================================
+
     async function initializeLiff() {
+
       if (!window.liff) {
-        statusText.textContent = "LIFF SDK 載入失敗";
+
+        statusText.textContent =
+          "LIFF SDK 載入失敗";
+
         return;
       }
 
+
       try {
-        await liff.init({ liffId: LIFF_ID });
+
+        await liff.init({
+          liffId: LIFF_ID,
+        });
+
+
         liffReady = true;
 
-        statusText.textContent = liff.isInClient()
-          ? "LIFF 已連線"
-          : "目前使用瀏覽器測試";
+
+        statusText.textContent =
+          liff.isInClient()
+            ? "LIFF 已連線"
+            : "目前使用瀏覽器測試";
+
+
       } catch (error) {
+
         liffReady = false;
-        console.error("LIFF 初始化失敗：", error);
-        statusText.textContent = "LIFF 初始化失敗";
+
+        console.error(
+          "LIFF 初始化失敗：",
+          error
+        );
+
+
+        statusText.textContent =
+          "LIFF 初始化失敗";
       }
     }
 
-    sendButton.addEventListener("click", () => {
-      const text = questionInput.value.trim();
 
-      if (!text) return;
+    // ============================================================
+    // 文字輸入測試
+    // ============================================================
 
-      addMessage("user", text);
+    function sendTestMessage() {
+
+      const text =
+        questionInput.value.trim();
+
+
+      if (!text) {
+        return;
+      }
+
+
+      addMessage(
+        "user",
+        text
+      );
+
+
       questionInput.value = "";
 
+
       window.setTimeout(() => {
+
         addMessage(
           "ai",
           "這裡目前是 UI 測試版。下一步接上 ask-ai Edge Function 後，我就會真的回答你。"
         );
+
       }, 350);
-    });
+    }
 
-    questionInput.addEventListener("keydown", (event) => {
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
-        event.preventDefault();
-        sendButton.click();
+
+    sendButton.addEventListener(
+      "click",
+      sendTestMessage
+    );
+
+
+    questionInput.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          sendTestMessage();
+        }
       }
-    });
+    );
 
-    imageButton.addEventListener("click", () => {
-      alert("圖片功能下一階段再接。");
-    });
 
-    window.addEventListener("DOMContentLoaded", initializeLiff);
+    // ============================================================
+    // 圖片按鈕
+    // ============================================================
+
+    imageButton.addEventListener(
+      "click",
+      () => {
+
+        alert(
+          "圖片功能下一階段會支援：\n\n📷 直接拍照\n🖼️ 從相簿選擇題目"
+        );
+
+      }
+    );
+
+
+    // ============================================================
+    // 啟動
+    // ============================================================
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      initializeLiff
+    );
   </script>
+
 </body>
 </html>
