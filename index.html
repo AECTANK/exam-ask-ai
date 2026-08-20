@@ -68,7 +68,7 @@
       padding:
         calc(18px + env(safe-area-inset-top))
         16px
-        calc(130px + env(safe-area-inset-bottom));
+        calc(140px + env(safe-area-inset-bottom));
     }
 
     /* ============================================================
@@ -84,11 +84,14 @@
       font-size: 25px;
       line-height: 1.3;
       font-weight: 850;
+      letter-spacing: 0.2px;
     }
 
     .header-subtitle {
       margin-top: 5px;
+
       color: var(--muted);
+
       font-size: 14px;
       line-height: 1.5;
       font-weight: 600;
@@ -113,6 +116,7 @@
 
     .intro-title {
       margin: 0 0 14px;
+
       font-size: 18px;
       line-height: 1.4;
       font-weight: 800;
@@ -126,9 +130,11 @@
     .intro-action {
       display: flex;
       align-items: center;
+
       gap: 11px;
 
       min-height: 46px;
+
       padding: 10px 12px;
 
       background: #f7f9fc;
@@ -139,7 +145,9 @@
 
     .intro-action-icon {
       flex: 0 0 30px;
+
       font-size: 21px;
+
       text-align: center;
     }
 
@@ -152,16 +160,20 @@
     .subject-list {
       display: flex;
       flex-wrap: wrap;
+
       gap: 7px;
+
       margin-top: 14px;
     }
 
     .subject-tag {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
 
       min-height: 29px;
+
       padding: 5px 10px;
 
       background: var(--soft-green);
@@ -195,11 +207,13 @@
     .chat-area {
       display: flex;
       flex-direction: column;
+
       gap: 12px;
     }
 
     .message-row {
       display: flex;
+
       width: 100%;
     }
 
@@ -217,6 +231,7 @@
 
     .bubble {
       max-width: 84%;
+
       padding: 12px 14px;
 
       border-radius: 16px;
@@ -230,13 +245,17 @@
 
     .message-row.ai .bubble {
       background: var(--ai-bubble);
+
       border: 1px solid var(--border);
+
       border-top-left-radius: 6px;
     }
 
     .message-row.user .bubble {
       background: var(--user-bubble);
+
       border: 1px solid #b7ead7;
+
       border-top-right-radius: 6px;
     }
 
@@ -251,6 +270,7 @@
       color: var(--warning-text);
 
       text-align: center;
+
       font-size: 14px;
     }
 
@@ -260,6 +280,7 @@
 
     .message-image {
       display: block;
+
       width: 100%;
       max-width: 260px;
 
@@ -270,8 +291,11 @@
 
     .image-caption {
       margin-top: 8px;
+
       font-size: 13px;
-      color: var(--muted);
+      line-height: 1.5;
+
+      color: var(--text);
     }
 
     /* ============================================================
@@ -280,7 +304,9 @@
 
     .thinking {
       display: inline-flex;
+
       align-items: center;
+
       gap: 5px;
 
       color: var(--muted);
@@ -291,6 +317,7 @@
       height: 6px;
 
       border-radius: 50%;
+
       background: #98a2b3;
 
       animation: blink 1.2s infinite;
@@ -305,6 +332,7 @@
     }
 
     @keyframes blink {
+
       0%,
       80%,
       100% {
@@ -333,6 +361,7 @@
 
     .status.error {
       color: var(--danger);
+
       font-weight: 700;
     }
 
@@ -365,6 +394,7 @@
     .composer-inner {
       width: 100%;
       max-width: 760px;
+
       margin: 0 auto;
     }
 
@@ -372,15 +402,27 @@
        IMAGE PREVIEW
     ============================================================ */
 
-    .image-preview-wrap {
+    .image-preview-area {
       display: none;
 
+      align-items: flex-start;
+
+      gap: 10px;
+
+      margin-bottom: 8px;
+    }
+
+    .image-preview-area.visible {
+      display: flex;
+    }
+
+    .image-preview-wrap {
       position: relative;
+
+      flex: 0 0 92px;
 
       width: 92px;
       height: 92px;
-
-      margin-bottom: 8px;
 
       border-radius: 14px;
 
@@ -389,10 +431,6 @@
       background: #eef1f5;
 
       border: 1px solid var(--border);
-    }
-
-    .image-preview-wrap.visible {
-      display: block;
     }
 
     .image-preview {
@@ -413,35 +451,52 @@
       width: 27px;
       height: 27px;
 
+      padding: 0;
+
       border: 0;
       border-radius: 50%;
 
-      background: rgba(0, 0, 0, 0.68);
+      background: rgba(0, 0, 0, 0.7);
+
       color: #ffffff;
 
-      font-size: 16px;
+      font-size: 18px;
       line-height: 27px;
 
       cursor: pointer;
     }
 
-    .image-info {
-      display: none;
+    .image-meta {
+      flex: 1;
 
-      margin-bottom: 8px;
+      min-width: 0;
+
+      padding-top: 4px;
+    }
+
+    .image-meta-title {
+      font-size: 13px;
+      line-height: 1.4;
+
+      font-weight: 750;
+
+      color: var(--text);
+    }
+
+    .image-info {
+      margin-top: 5px;
 
       color: var(--muted);
 
       font-size: 11px;
-    }
-
-    .image-info.visible {
-      display: block;
+      line-height: 1.5;
     }
 
     .composer-row {
       display: flex;
+
       align-items: flex-end;
+
       gap: 8px;
     }
 
@@ -471,6 +526,7 @@
 
     .image-button:disabled {
       opacity: 0.45;
+
       cursor: not-allowed;
     }
 
@@ -490,6 +546,7 @@
       display: block;
 
       width: 100%;
+
       min-height: 48px;
       max-height: 120px;
 
@@ -521,7 +578,9 @@
 
     .question-input:disabled {
       background: #eef1f5;
+
       color: #98a2b3;
+
       cursor: not-allowed;
     }
 
@@ -558,6 +617,7 @@
 
     .send-button:disabled {
       background: #a8b3c5;
+
       cursor: not-allowed;
     }
 
@@ -590,8 +650,10 @@
 
       .bubble {
         max-width: 88%;
+
         font-size: 15px;
       }
+
     }
 
   </style>
@@ -614,6 +676,7 @@
 
     </header>
 
+
     <section
       id="introCard"
       class="intro-card"
@@ -622,6 +685,7 @@
       <div class="intro-title">
         有題目就丟給我吧！ 👋
       </div>
+
 
       <div class="intro-actions">
 
@@ -637,6 +701,7 @@
 
         </div>
 
+
         <div class="intro-action">
 
           <div class="intro-action-icon">
@@ -650,6 +715,7 @@
         </div>
 
       </div>
+
 
       <div class="subject-list">
 
@@ -675,16 +741,19 @@
 
       </div>
 
+
       <div class="intro-tip">
         💡 一次問一題，題目拍清楚，我會看得更準。
       </div>
 
     </section>
 
+
     <section
       id="chatArea"
       class="chat-area"
     ></section>
+
 
     <div
       id="statusText"
@@ -695,40 +764,62 @@
 
   </main>
 
+
+  <!-- ==========================================================
+       COMPOSER
+  =========================================================== -->
+
   <div class="composer">
 
     <div class="composer-inner">
+
 
       <!-- ======================================================
            IMAGE PREVIEW
       ======================================================= -->
 
       <div
-        id="imagePreviewWrap"
-        class="image-preview-wrap"
+        id="imagePreviewArea"
+        class="image-preview-area"
       >
 
-        <img
-          id="imagePreview"
-          class="image-preview"
-          alt="題目圖片預覽"
-        />
-
-        <button
-          id="removeImageButton"
-          class="remove-image-button"
-          type="button"
-          aria-label="移除圖片"
+        <div
+          class="image-preview-wrap"
         >
-          ×
-        </button>
+
+          <img
+            id="imagePreview"
+            class="image-preview"
+            alt="題目圖片預覽"
+          />
+
+          <button
+            id="removeImageButton"
+            class="remove-image-button"
+            type="button"
+            aria-label="移除圖片"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="image-meta">
+
+          <div class="image-meta-title">
+            題目圖片已準備好
+          </div>
+
+          <div
+            id="imageInfo"
+            class="image-info"
+          ></div>
+
+        </div>
 
       </div>
 
-      <div
-        id="imageInfo"
-        class="image-info"
-      ></div>
 
       <!-- ======================================================
            INPUT ROW
@@ -747,12 +838,14 @@
           📷
         </button>
 
+
         <input
           id="fileInput"
           class="file-input"
           type="file"
           accept="image/jpeg,image/png,image/webp"
         />
+
 
         <div class="input-wrap">
 
@@ -766,6 +859,7 @@
           ></textarea>
 
         </div>
+
 
         <button
           id="sendButton"
@@ -783,9 +877,11 @@
 
   </div>
 
+
   <script>
 
     "use strict";
+
 
     // ============================================================
     // CONFIG
@@ -794,11 +890,14 @@
     const LIFF_ID =
       "2011171161-2TM6bcRg";
 
+
     const GET_ASK_AI_USER_URL =
       "https://xbitdnrjiqlosfkzegiz.supabase.co/functions/v1/get-ask-ai-user";
 
+
     const ASK_AI_URL =
       "https://xbitdnrjiqlosfkzegiz.supabase.co/functions/v1/ask-ai";
+
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_VtPQzTC8Cw-ccxC5bSzIuw_nHVbTO3Q";
@@ -814,14 +913,21 @@
       "image/webp",
     ];
 
+
+    // 原图先挡极端大文件。
     const MAX_ORIGINAL_IMAGE_BYTES =
       12 * 1024 * 1024;
 
+
+    // 真正准备送后端的图片最大 3 MB。
     const MAX_COMPRESSED_IMAGE_BYTES =
       3 * 1024 * 1024;
 
+
+    // 长边最大 1800px。
     const MAX_IMAGE_LONG_SIDE =
       1800;
+
 
     const JPEG_QUALITY =
       0.82;
@@ -831,13 +937,20 @@
     // STATE
     // ============================================================
 
-    let currentUser = null;
+    let currentUser =
+      null;
 
-    let currentIdToken = null;
 
-    let requestInProgress = false;
+    let currentIdToken =
+      null;
 
-    let selectedImage = null;
+
+    let requestInProgress =
+      false;
+
+
+    let selectedImage =
+      null;
 
 
     // selectedImage:
@@ -847,6 +960,8 @@
     //   mimeType,
     //   originalBytes,
     //   compressedBytes,
+    //   width,
+    //   height,
     //   blob,
     //   base64,
     //   previewUrl
@@ -862,50 +977,60 @@
         "introCard"
       );
 
+
     const chatArea =
       document.getElementById(
         "chatArea"
       );
+
 
     const questionInput =
       document.getElementById(
         "questionInput"
       );
 
+
     const sendButton =
       document.getElementById(
         "sendButton"
       );
+
 
     const imageButton =
       document.getElementById(
         "imageButton"
       );
 
+
     const fileInput =
       document.getElementById(
         "fileInput"
       );
 
-    const imagePreviewWrap =
+
+    const imagePreviewArea =
       document.getElementById(
-        "imagePreviewWrap"
+        "imagePreviewArea"
       );
+
 
     const imagePreview =
       document.getElementById(
         "imagePreview"
       );
 
+
     const removeImageButton =
       document.getElementById(
         "removeImageButton"
       );
 
+
     const imageInfo =
       document.getElementById(
         "imageInfo"
       );
+
 
     const statusText =
       document.getElementById(
@@ -914,23 +1039,30 @@
 
 
     // ============================================================
-    // UI
+    // UI STATE
     // ============================================================
 
     function enableComposer() {
 
-      if (requestInProgress) {
+      if (
+        requestInProgress
+      ) {
+
         return;
       }
+
 
       questionInput.disabled =
         false;
 
+
       sendButton.disabled =
         false;
 
+
       imageButton.disabled =
         false;
+
 
       questionInput.placeholder =
         "輸入你的問題……";
@@ -944,14 +1076,18 @@
       questionInput.disabled =
         true;
 
+
       sendButton.disabled =
         true;
+
 
       imageButton.disabled =
         true;
 
+
       questionInput.placeholder =
-        message || "目前無法使用";
+        message ||
+        "目前無法使用";
     }
 
 
@@ -962,27 +1098,43 @@
       requestInProgress =
         sending;
 
+
       if (sending) {
 
         questionInput.disabled =
           true;
 
+
         sendButton.disabled =
           true;
+
 
         imageButton.disabled =
           true;
 
+
+        removeImageButton.disabled =
+          true;
+
+
         sendButton.textContent =
           "…";
+
 
         return;
       }
 
+
       sendButton.textContent =
         "➤";
 
+
+      removeImageButton.disabled =
+        false;
+
+
       enableComposer();
+
 
       questionInput.focus();
     }
@@ -996,6 +1148,7 @@
       statusText.textContent =
         message;
 
+
       statusText.classList.toggle(
         "error",
         isError
@@ -1004,7 +1157,7 @@
 
 
     // ============================================================
-    // CHAT
+    // CHAT UI
     // ============================================================
 
     function scrollToLatest() {
@@ -1036,29 +1189,37 @@
           "div"
         );
 
+
       row.className =
         `message-row ${role}`;
+
 
       const bubble =
         document.createElement(
           "div"
         );
 
+
       bubble.className =
         "bubble";
 
+
       bubble.textContent =
         text;
+
 
       row.appendChild(
         bubble
       );
 
+
       chatArea.appendChild(
         row
       );
 
+
       scrollToLatest();
+
 
       return row;
     }
@@ -1074,34 +1235,43 @@
           "div"
         );
 
+
       row.className =
         "message-row user";
+
 
       const bubble =
         document.createElement(
           "div"
         );
 
+
       bubble.className =
         "bubble";
+
 
       const img =
         document.createElement(
           "img"
         );
 
+
       img.className =
         "message-image";
+
 
       img.src =
         previewUrl;
 
+
       img.alt =
         "學生上傳的題目";
+
 
       bubble.appendChild(
         img
       );
+
 
       if (text) {
 
@@ -1110,26 +1280,33 @@
             "div"
           );
 
+
         caption.className =
           "image-caption";
 
+
         caption.textContent =
           text;
+
 
         bubble.appendChild(
           caption
         );
       }
 
+
       row.appendChild(
         bubble
       );
+
 
       chatArea.appendChild(
         row
       );
 
+
       scrollToLatest();
+
 
       return row;
     }
@@ -1142,36 +1319,45 @@
           "div"
         );
 
+
       row.className =
         "message-row ai";
+
 
       const bubble =
         document.createElement(
           "div"
         );
 
+
       bubble.className =
         "bubble";
+
 
       const thinking =
         document.createElement(
           "div"
         );
 
+
       thinking.className =
         "thinking";
+
 
       const label =
         document.createElement(
           "span"
         );
 
+
       label.textContent =
         "AI 正在想";
+
 
       thinking.appendChild(
         label
       );
+
 
       for (
         let i = 0;
@@ -1184,34 +1370,41 @@
             "span"
           );
 
+
         dot.className =
           "thinking-dot";
+
 
         thinking.appendChild(
           dot
         );
       }
 
+
       bubble.appendChild(
         thinking
       );
+
 
       row.appendChild(
         bubble
       );
 
+
       chatArea.appendChild(
         row
       );
 
+
       scrollToLatest();
+
 
       return row;
     }
 
 
     // ============================================================
-    // FETCH
+    // FETCH JSON
     // ============================================================
 
     async function postJson(
@@ -1227,16 +1420,21 @@
             method:
               "POST",
 
+
             headers: {
+
               "Content-Type":
                 "application/json",
+
 
               "apikey":
                 SUPABASE_PUBLISHABLE_KEY,
 
+
               "Authorization":
                 `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             },
+
 
             body:
               JSON.stringify(
@@ -1245,10 +1443,13 @@
           }
         );
 
+
       const responseText =
         await response.text();
 
+
       let result;
+
 
       try {
 
@@ -1264,6 +1465,7 @@
         );
       }
 
+
       if (
         !response.ok ||
         result.success !== true
@@ -1276,12 +1478,13 @@
         );
       }
 
+
       return result;
     }
 
 
     // ============================================================
-    // USER
+    // GET USER
     // ============================================================
 
     async function loadAskAiUser(
@@ -1300,6 +1503,7 @@
           "身份確認"
         );
 
+
       return result.user;
     }
 
@@ -1312,12 +1516,15 @@
       text
     ) {
 
-      if (!currentIdToken) {
+      if (
+        !currentIdToken
+      ) {
 
         throw new Error(
           "LINE 身份資訊已失效，請重新開啟頁面。"
         );
       }
+
 
       return await postJson(
         ASK_AI_URL,
@@ -1336,26 +1543,42 @@
 
 
     // ============================================================
-    // IMAGE SELECT
+    // IMAGE BUTTON
     // ============================================================
 
     imageButton.addEventListener(
       "click",
       () => {
 
-        if (!currentUser) {
+        if (
+          !currentUser
+        ) {
 
           alert(
             "尚未完成身份確認。"
           );
 
+
           return;
         }
+
+
+        if (
+          requestInProgress
+        ) {
+
+          return;
+        }
+
 
         fileInput.click();
       }
     );
 
+
+    // ============================================================
+    // FILE CHANGE
+    // ============================================================
 
     fileInput.addEventListener(
       "change",
@@ -1364,9 +1587,12 @@
         const file =
           fileInput.files?.[0];
 
+
         if (!file) {
+
           return;
         }
+
 
         try {
 
@@ -1381,7 +1607,9 @@
             error
           );
 
+
           clearSelectedImage();
+
 
           alert(
             error instanceof Error
@@ -1395,12 +1623,16 @@
 
 
     // ============================================================
-    // HANDLE IMAGE
+    // HANDLE SELECTED IMAGE
     // ============================================================
 
     async function handleSelectedImage(
       file
     ) {
+
+      // ----------------------------------------------------------
+      // TYPE
+      // ----------------------------------------------------------
 
       if (
         !ALLOWED_IMAGE_TYPES.includes(
@@ -1413,6 +1645,10 @@
         );
       }
 
+
+      // ----------------------------------------------------------
+      // ORIGINAL SIZE
+      // ----------------------------------------------------------
 
       if (
         file.size >
@@ -1430,11 +1666,19 @@
       );
 
 
+      // ----------------------------------------------------------
+      // COMPRESS
+      // ----------------------------------------------------------
+
       const compressed =
         await compressImage(
           file
         );
 
+
+      // ----------------------------------------------------------
+      // FINAL SIZE
+      // ----------------------------------------------------------
 
       if (
         compressed.blob.size >
@@ -1447,76 +1691,89 @@
       }
 
 
+      // ----------------------------------------------------------
+      // BASE64
+      // ----------------------------------------------------------
+
       const base64 =
         await blobToBase64(
           compressed.blob
         );
 
 
+      // 清旧图。
       clearSelectedImage();
+
+
+      const previewUrl =
+        URL.createObjectURL(
+          compressed.blob
+        );
 
 
       selectedImage = {
 
         fileName:
-          file.name || "question.jpg",
+          file.name ||
+          "question.jpg",
+
 
         mimeType:
           compressed.blob.type,
 
+
         originalBytes:
           file.size,
+
 
         compressedBytes:
           compressed.blob.size,
 
+
+        width:
+          compressed.width,
+
+
+        height:
+          compressed.height,
+
+
         blob:
           compressed.blob,
+
 
         base64:
           base64,
 
+
         previewUrl:
-          URL.createObjectURL(
-            compressed.blob
-          ),
+          previewUrl,
       };
 
 
+      // ----------------------------------------------------------
+      // PREVIEW
+      // ----------------------------------------------------------
+
       imagePreview.src =
-        selectedImage.previewUrl;
+        previewUrl;
 
 
-      imagePreviewWrap.classList.add(
+      imagePreviewArea.classList.add(
         "visible"
       );
 
 
       imageInfo.textContent =
-        `圖片已準備好｜${formatBytes(selectedImage.compressedBytes)}`;
+        [
+          `${compressed.width} × ${compressed.height}`,
+          formatBytes(
+            selectedImage.compressedBytes
+          ),
+        ].join("｜");
 
 
-      imageInfo.classList.add(
-        "visible"
-      );
-
-
-      const roleText =
-        currentUser.role ===
-        "teacher"
-          ? "老師"
-          : "學生";
-
-
-      const displayName =
-        currentUser.nickname ||
-        currentUser.full_name ||
-        "使用者";
-
-
-      showStatus(
-        `LIFF 已連線｜${roleText}：${displayName}`
-      );
+      restoreConnectedStatus();
     }
 
 
@@ -1528,10 +1785,25 @@
       file
     ) {
 
-      const imageBitmap =
-        await createImageBitmap(
+      let imageBitmap;
+
+
+      try {
+
+        imageBitmap =
+          await createImageBitmap(
+            file
+          );
+
+      } catch {
+
+        // 某些旧版 iOS WebView 对 createImageBitmap 支援不完整。
+        // 使用 Image + Object URL fallback。
+
+        return await compressImageWithHtmlImage(
           file
         );
+      }
 
 
       let width =
@@ -1542,36 +1814,19 @@
         imageBitmap.height;
 
 
-      const longSide =
-        Math.max(
+      const resized =
+        calculateResizedDimensions(
           width,
           height
         );
 
 
-      if (
-        longSide >
-        MAX_IMAGE_LONG_SIDE
-      ) {
-
-        const ratio =
-          MAX_IMAGE_LONG_SIDE /
-          longSide;
+      width =
+        resized.width;
 
 
-        width =
-          Math.round(
-            width *
-            ratio
-          );
-
-
-        height =
-          Math.round(
-            height *
-            ratio
-          );
-      }
+      height =
+        resized.height;
 
 
       const canvas =
@@ -1598,10 +1853,24 @@
 
         imageBitmap.close();
 
+
         throw new Error(
           "手機無法建立圖片處理畫布。"
         );
       }
+
+
+      // 白底，避免透明 PNG 转 JPEG 后出现黑底。
+      ctx.fillStyle =
+        "#ffffff";
+
+
+      ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+      );
 
 
       ctx.drawImage(
@@ -1617,35 +1886,8 @@
 
 
       const blob =
-        await new Promise(
-          (resolve, reject) => {
-
-            canvas.toBlob(
-              (result) => {
-
-                if (!result) {
-
-                  reject(
-                    new Error(
-                      "圖片壓縮失敗。"
-                    )
-                  );
-
-                  return;
-                }
-
-                resolve(
-                  result
-                );
-
-              },
-
-              "image/jpeg",
-
-              JPEG_QUALITY
-            );
-
-          }
+        await canvasToJpegBlob(
+          canvas
         );
 
 
@@ -1654,6 +1896,249 @@
         width,
         height,
       };
+    }
+
+
+    // ============================================================
+    // FALLBACK IMAGE COMPRESS
+    // ============================================================
+
+    async function compressImageWithHtmlImage(
+      file
+    ) {
+
+      const objectUrl =
+        URL.createObjectURL(
+          file
+        );
+
+
+      try {
+
+        const img =
+          await new Promise(
+            (resolve, reject) => {
+
+              const element =
+                new Image();
+
+
+              element.onload =
+                () => resolve(
+                  element
+                );
+
+
+              element.onerror =
+                () => reject(
+                  new Error(
+                    "圖片讀取失敗。"
+                  )
+                );
+
+
+              element.src =
+                objectUrl;
+            }
+          );
+
+
+        const resized =
+          calculateResizedDimensions(
+            img.naturalWidth,
+            img.naturalHeight
+          );
+
+
+        const canvas =
+          document.createElement(
+            "canvas"
+          );
+
+
+        canvas.width =
+          resized.width;
+
+
+        canvas.height =
+          resized.height;
+
+
+        const ctx =
+          canvas.getContext(
+            "2d"
+          );
+
+
+        if (!ctx) {
+
+          throw new Error(
+            "手機無法建立圖片處理畫布。"
+          );
+        }
+
+
+        ctx.fillStyle =
+          "#ffffff";
+
+
+        ctx.fillRect(
+          0,
+          0,
+          resized.width,
+          resized.height
+        );
+
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          resized.width,
+          resized.height
+        );
+
+
+        const blob =
+          await canvasToJpegBlob(
+            canvas
+          );
+
+
+        return {
+          blob,
+          width:
+            resized.width,
+          height:
+            resized.height,
+        };
+
+
+      } finally {
+
+        URL.revokeObjectURL(
+          objectUrl
+        );
+      }
+    }
+
+
+    // ============================================================
+    // RESIZE
+    // ============================================================
+
+    function calculateResizedDimensions(
+      originalWidth,
+      originalHeight
+    ) {
+
+      let width =
+        Number(
+          originalWidth
+        );
+
+
+      let height =
+        Number(
+          originalHeight
+        );
+
+
+      if (
+        !width ||
+        !height
+      ) {
+
+        throw new Error(
+          "無法讀取圖片尺寸。"
+        );
+      }
+
+
+      const longSide =
+        Math.max(
+          width,
+          height
+        );
+
+
+      if (
+        longSide <=
+        MAX_IMAGE_LONG_SIDE
+      ) {
+
+        return {
+          width,
+          height,
+        };
+      }
+
+
+      const ratio =
+        MAX_IMAGE_LONG_SIDE /
+        longSide;
+
+
+      width =
+        Math.round(
+          width *
+          ratio
+        );
+
+
+      height =
+        Math.round(
+          height *
+          ratio
+        );
+
+
+      return {
+        width,
+        height,
+      };
+    }
+
+
+    // ============================================================
+    // CANVAS TO JPEG
+    // ============================================================
+
+    function canvasToJpegBlob(
+      canvas
+    ) {
+
+      return new Promise(
+        (resolve, reject) => {
+
+          canvas.toBlob(
+            (result) => {
+
+              if (!result) {
+
+                reject(
+                  new Error(
+                    "圖片壓縮失敗。"
+                  )
+                );
+
+
+                return;
+              }
+
+
+              resolve(
+                result
+              );
+
+            },
+
+            "image/jpeg",
+
+            JPEG_QUALITY
+          );
+        }
+      );
     }
 
 
@@ -1677,7 +2162,8 @@
 
               const result =
                 String(
-                  reader.result || ""
+                  reader.result ||
+                  ""
                 );
 
 
@@ -1696,6 +2182,7 @@
                     "圖片轉換失敗。"
                   )
                 );
+
 
                 return;
               }
@@ -1729,6 +2216,60 @@
 
 
     // ============================================================
+    // FORMAT BYTES
+    // ============================================================
+
+    function formatBytes(
+      bytes
+    ) {
+
+      const value =
+        Number(
+          bytes || 0
+        );
+
+
+      if (
+        !Number.isFinite(
+          value
+        ) ||
+        value <= 0
+      ) {
+
+        return "0 B";
+      }
+
+
+      if (
+        value <
+        1024
+      ) {
+
+        return `${Math.round(value)} B`;
+      }
+
+
+      if (
+        value <
+        1024 * 1024
+      ) {
+
+        return `${(
+          value /
+          1024
+        ).toFixed(0)} KB`;
+      }
+
+
+      return `${(
+        value /
+        1024 /
+        1024
+      ).toFixed(2)} MB`;
+    }
+
+
+    // ============================================================
     // CLEAR IMAGE
     // ============================================================
 
@@ -1752,18 +2293,13 @@
         "";
 
 
-      imagePreviewWrap.classList.remove(
+      imagePreviewArea.classList.remove(
         "visible"
       );
 
 
       imageInfo.textContent =
         "";
-
-
-      imageInfo.classList.remove(
-        "visible"
-      );
 
 
       fileInput.value =
@@ -1773,12 +2309,56 @@
 
     removeImageButton.addEventListener(
       "click",
-      clearSelectedImage
+      () => {
+
+        if (
+          requestInProgress
+        ) {
+
+          return;
+        }
+
+
+        clearSelectedImage();
+      }
     );
 
 
     // ============================================================
-    // LIFF INIT
+    // RESTORE STATUS
+    // ============================================================
+
+    function restoreConnectedStatus() {
+
+      if (
+        !currentUser
+      ) {
+
+        return;
+      }
+
+
+      const roleText =
+        currentUser.role ===
+        "teacher"
+          ? "老師"
+          : "學生";
+
+
+      const displayName =
+        currentUser.nickname ||
+        currentUser.full_name ||
+        "使用者";
+
+
+      showStatus(
+        `LIFF 已連線｜${roleText}：${displayName}`
+      );
+    }
+
+
+    // ============================================================
+    // LIFF INITIALIZATION
     // ============================================================
 
     async function initializeLiff() {
@@ -1788,12 +2368,15 @@
       );
 
 
-      if (!window.liff) {
+      if (
+        !window.liff
+      ) {
 
         showStatus(
           "LIFF SDK 載入失敗",
           true
         );
+
 
         return;
       }
@@ -1801,11 +2384,19 @@
 
       try {
 
+        // --------------------------------------------------------
+        // INIT
+        // --------------------------------------------------------
+
         await liff.init({
           liffId:
             LIFF_ID,
         });
 
+
+        // --------------------------------------------------------
+        // LOGIN
+        // --------------------------------------------------------
 
         if (
           !liff.isLoggedIn()
@@ -1815,11 +2406,17 @@
             "正在登入 LINE……"
           );
 
+
           liff.login();
+
 
           return;
         }
 
+
+        // --------------------------------------------------------
+        // TOKEN
+        // --------------------------------------------------------
 
         currentIdToken =
           liff.getIDToken();
@@ -1840,28 +2437,21 @@
         );
 
 
+        // --------------------------------------------------------
+        // USER
+        // --------------------------------------------------------
+
         currentUser =
           await loadAskAiUser(
             currentIdToken
           );
 
 
-        const roleText =
-          currentUser.role ===
-          "teacher"
-            ? "老師"
-            : "學生";
+        // --------------------------------------------------------
+        // READY
+        // --------------------------------------------------------
 
-
-        const displayName =
-          currentUser.nickname ||
-          currentUser.full_name ||
-          "使用者";
-
-
-        showStatus(
-          `LIFF 已連線｜${roleText}：${displayName}`
-        );
+        restoreConnectedStatus();
 
 
         enableComposer();
@@ -1883,12 +2473,14 @@
           null;
 
 
+        const message =
+          error instanceof Error
+            ? error.message
+            : String(error);
+
+
         showStatus(
-          `身份確認失敗：${
-            error instanceof Error
-              ? error.message
-              : String(error)
-          }`,
+          `身份確認失敗：${message}`,
           true
         );
 
@@ -1901,10 +2493,14 @@
 
 
     // ============================================================
-    // SEND
+    // SEND MESSAGE
     // ============================================================
 
     async function sendMessage() {
+
+      // ----------------------------------------------------------
+      // DOUBLE SEND
+      // ----------------------------------------------------------
 
       if (
         requestInProgress
@@ -1913,6 +2509,10 @@
         return;
       }
 
+
+      // ----------------------------------------------------------
+      // USER
+      // ----------------------------------------------------------
 
       if (
         !currentUser ||
@@ -1923,9 +2523,14 @@
           "尚未完成身份確認。"
         );
 
+
         return;
       }
 
+
+      // ----------------------------------------------------------
+      // TEXT
+      // ----------------------------------------------------------
 
       const text =
         questionInput
@@ -1951,6 +2556,7 @@
           "一次最多輸入 1200 個字元，請把問題縮短一點。"
         );
 
+
         return;
       }
 
@@ -1959,8 +2565,11 @@
       // IMAGE FLOW
       // ==========================================================
 
-      if (selectedImage) {
+      if (
+        selectedImage
+      ) {
 
+        // 保留 chat bubble 用的 preview URL。
         const imageSnapshot = {
           ...selectedImage
         };
@@ -1976,27 +2585,46 @@
           "";
 
 
-        if (
-          introCard &&
-          !introCard.dataset.hidden
-        ) {
-
-          introCard.style.display =
-            "none";
-
-
-          introCard.dataset.hidden =
-            "true";
-        }
+        hideIntroCard();
 
 
         addMessage(
           "system",
-          "圖片已成功選取並壓縮。下一步接上圖片版 ask-ai 後端後，就會直接送給 Gemini 看題。"
+          [
+            "圖片已成功選取並壓縮。",
+            "",
+            `尺寸：${imageSnapshot.width} × ${imageSnapshot.height}`,
+            `大小：${formatBytes(imageSnapshot.compressedBytes)}`,
+            "",
+            "下一步接上圖片版 ask-ai 後端後，就會直接送給 Gemini 看題。"
+          ].join("\n")
         );
 
 
-        clearSelectedImage();
+        // 注意：
+        // addUserImageMessage 的 img 仍在使用这个 URL，
+        // 所以这里不能立刻 revoke。
+        //
+        // 只清 composer state。
+        selectedImage =
+          null;
+
+
+        imagePreview.src =
+          "";
+
+
+        imagePreviewArea.classList.remove(
+          "visible"
+        );
+
+
+        imageInfo.textContent =
+          "";
+
+
+        fileInput.value =
+          "";
 
 
         return;
@@ -2017,18 +2645,7 @@
         "";
 
 
-      if (
-        introCard &&
-        !introCard.dataset.hidden
-      ) {
-
-        introCard.style.display =
-          "none";
-
-
-        introCard.dataset.hidden =
-          "true";
-      }
+      hideIntroCard();
 
 
       const thinkingRow =
@@ -2053,11 +2670,14 @@
 
         const answer =
           String(
-            result.answer || ""
+            result.answer ||
+            ""
           ).trim();
 
 
-        if (!answer) {
+        if (
+          !answer
+        ) {
 
           throw new Error(
             "AI 沒有回傳答案。"
@@ -2075,6 +2695,17 @@
           "Ask AI response:",
           result
         );
+
+
+        if (
+          result.usage
+        ) {
+
+          console.log(
+            "Token usage:",
+            result.usage
+          );
+        }
 
 
       } catch (error) {
@@ -2108,6 +2739,30 @@
 
 
     // ============================================================
+    // HIDE INTRO
+    // ============================================================
+
+    function hideIntroCard() {
+
+      if (
+        !introCard ||
+        introCard.dataset.hidden
+      ) {
+
+        return;
+      }
+
+
+      introCard.style.display =
+        "none";
+
+
+      introCard.dataset.hidden =
+        "true";
+    }
+
+
+    // ============================================================
     // EVENTS
     // ============================================================
 
@@ -2129,17 +2784,26 @@
 
           event.preventDefault();
 
+
           sendMessage();
         }
       }
     );
 
 
+    // ============================================================
+    // START
+    // ============================================================
+
     window.addEventListener(
       "DOMContentLoaded",
       initializeLiff
     );
 
+
+    // ============================================================
+    // CLEANUP
+    // ============================================================
 
     window.addEventListener(
       "beforeunload",
