@@ -12,6 +12,11 @@
 
   <title>會考問 AI</title>
 
+  <meta
+    name="app-version"
+    content="2026.08.20-1112-image-live"
+  />
+
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <style>
@@ -19,34 +24,47 @@
     :root {
       --primary: #07966c;
       --primary-dark: #067a59;
+
       --background: #f3f6fb;
       --card: #ffffff;
+
       --text: #172033;
       --muted: #667085;
+
       --border: #d9e0ea;
+
       --user-bubble: #dcf7ec;
       --ai-bubble: #ffffff;
+
       --soft-green: #edf9f5;
+
       --danger: #c62828;
+
       --warning-bg: #fff7ed;
       --warning-border: #fed7aa;
       --warning-text: #9a3412;
     }
 
+
     * {
       box-sizing: border-box;
+
       -webkit-text-size-adjust: 100%;
     }
+
 
     html,
     body {
       margin: 0;
       padding: 0;
+
       min-height: 100%;
     }
 
+
     body {
       background: var(--background);
+
       color: var(--text);
 
       font-family:
@@ -59,17 +77,27 @@
         sans-serif;
     }
 
+
+
+    /* ============================================================
+       PAGE
+    ============================================================ */
+
     .page {
       width: 100%;
       max-width: 760px;
+
       min-height: 100vh;
+
       margin: 0 auto;
 
       padding:
         calc(18px + env(safe-area-inset-top))
         16px
-        calc(140px + env(safe-area-inset-bottom));
+        calc(150px + env(safe-area-inset-bottom));
     }
+
+
 
     /* ============================================================
        HEADER
@@ -79,13 +107,19 @@
       margin-bottom: 14px;
     }
 
+
     .header-title {
       margin: 0;
+
       font-size: 25px;
+
       line-height: 1.3;
+
       font-weight: 850;
+
       letter-spacing: 0.2px;
     }
+
 
     .header-subtitle {
       margin-top: 5px;
@@ -93,9 +127,13 @@
       color: var(--muted);
 
       font-size: 14px;
+
       line-height: 1.5;
+
       font-weight: 600;
     }
+
+
 
     /* ============================================================
        INTRO
@@ -103,32 +141,41 @@
 
     .intro-card {
       margin-bottom: 20px;
+
       padding: 18px;
 
       background: var(--card);
 
       border: 1px solid var(--border);
+
       border-radius: 18px;
 
       box-shadow:
         0 6px 20px rgba(30, 50, 80, 0.06);
     }
 
+
     .intro-title {
       margin: 0 0 14px;
 
       font-size: 18px;
+
       line-height: 1.4;
+
       font-weight: 800;
     }
 
+
     .intro-actions {
       display: grid;
+
       gap: 10px;
     }
 
+
     .intro-action {
       display: flex;
+
       align-items: center;
 
       gap: 11px;
@@ -140,8 +187,10 @@
       background: #f7f9fc;
 
       border: 1px solid #e4e9f0;
+
       border-radius: 12px;
     }
+
 
     .intro-action-icon {
       flex: 0 0 30px;
@@ -151,14 +200,24 @@
       text-align: center;
     }
 
+
     .intro-action-text {
       font-size: 15px;
+
       line-height: 1.45;
+
       font-weight: 700;
     }
 
+
+
+    /* ============================================================
+       SUBJECTS
+    ============================================================ */
+
     .subject-list {
       display: flex;
+
       flex-wrap: wrap;
 
       gap: 7px;
@@ -166,10 +225,12 @@
       margin-top: 14px;
     }
 
+
     .subject-tag {
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       min-height: 29px;
@@ -179,17 +240,22 @@
       background: var(--soft-green);
 
       border: 1px solid #cceee2;
+
       border-radius: 999px;
 
       color: #087456;
 
       font-size: 13px;
+
       line-height: 1;
+
       font-weight: 750;
     }
 
+
     .intro-tip {
       margin-top: 13px;
+
       padding-top: 12px;
 
       border-top: 1px solid #edf0f4;
@@ -197,8 +263,11 @@
       color: var(--muted);
 
       font-size: 13px;
+
       line-height: 1.5;
     }
+
+
 
     /* ============================================================
        CHAT
@@ -206,10 +275,12 @@
 
     .chat-area {
       display: flex;
+
       flex-direction: column;
 
       gap: 12px;
     }
+
 
     .message-row {
       display: flex;
@@ -217,17 +288,21 @@
       width: 100%;
     }
 
+
     .message-row.ai {
       justify-content: flex-start;
     }
+
 
     .message-row.user {
       justify-content: flex-end;
     }
 
+
     .message-row.system {
       justify-content: center;
     }
+
 
     .bubble {
       max-width: 84%;
@@ -237,11 +312,14 @@
       border-radius: 16px;
 
       font-size: 15px;
+
       line-height: 1.65;
 
       white-space: pre-wrap;
+
       overflow-wrap: anywhere;
     }
+
 
     .message-row.ai .bubble {
       background: var(--ai-bubble);
@@ -251,6 +329,7 @@
       border-top-left-radius: 6px;
     }
 
+
     .message-row.user .bubble {
       background: var(--user-bubble);
 
@@ -259,8 +338,10 @@
       border-top-right-radius: 6px;
     }
 
+
     .message-row.system .bubble {
       max-width: 100%;
+
       width: 100%;
 
       background: var(--warning-bg);
@@ -274,29 +355,40 @@
       font-size: 14px;
     }
 
+
+
     /* ============================================================
-       IMAGE MESSAGE
+       CHAT IMAGE
     ============================================================ */
 
     .message-image {
       display: block;
 
       width: 100%;
-      max-width: 260px;
+
+      max-width: 280px;
+
+      max-height: 360px;
 
       border-radius: 12px;
 
-      object-fit: cover;
+      object-fit: contain;
+
+      background: #ffffff;
     }
+
 
     .image-caption {
       margin-top: 8px;
 
-      font-size: 13px;
+      font-size: 14px;
+
       line-height: 1.5;
 
       color: var(--text);
     }
+
+
 
     /* ============================================================
        THINKING
@@ -312,8 +404,10 @@
       color: var(--muted);
     }
 
+
     .thinking-dot {
       width: 6px;
+
       height: 6px;
 
       border-radius: 50%;
@@ -323,13 +417,16 @@
       animation: blink 1.2s infinite;
     }
 
+
     .thinking-dot:nth-child(2) {
       animation-delay: 0.2s;
     }
 
+
     .thinking-dot:nth-child(3) {
       animation-delay: 0.4s;
     }
+
 
     @keyframes blink {
 
@@ -344,6 +441,8 @@
       }
     }
 
+
+
     /* ============================================================
        STATUS
     ============================================================ */
@@ -354,16 +453,20 @@
       color: #98a2b3;
 
       font-size: 11px;
+
       line-height: 1.5;
 
       text-align: center;
     }
+
 
     .status.error {
       color: var(--danger);
 
       font-weight: 700;
     }
+
+
 
     /* ============================================================
        COMPOSER
@@ -373,7 +476,9 @@
       position: fixed;
 
       left: 0;
+
       right: 0;
+
       bottom: 0;
 
       z-index: 100;
@@ -388,15 +493,20 @@
       border-top: 1px solid var(--border);
 
       backdrop-filter: blur(12px);
+
       -webkit-backdrop-filter: blur(12px);
     }
 
+
     .composer-inner {
       width: 100%;
+
       max-width: 760px;
 
       margin: 0 auto;
     }
+
+
 
     /* ============================================================
        IMAGE PREVIEW
@@ -412,9 +522,11 @@
       margin-bottom: 8px;
     }
 
+
     .image-preview-area.visible {
       display: flex;
     }
+
 
     .image-preview-wrap {
       position: relative;
@@ -422,6 +534,7 @@
       flex: 0 0 92px;
 
       width: 92px;
+
       height: 92px;
 
       border-radius: 14px;
@@ -433,38 +546,51 @@
       border: 1px solid var(--border);
     }
 
+
     .image-preview {
       display: block;
 
       width: 100%;
+
       height: 100%;
 
       object-fit: cover;
     }
 
+
     .remove-image-button {
       position: absolute;
 
       top: 5px;
+
       right: 5px;
 
       width: 27px;
+
       height: 27px;
 
       padding: 0;
 
       border: 0;
+
       border-radius: 50%;
 
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.72);
 
       color: #ffffff;
 
       font-size: 18px;
+
       line-height: 27px;
 
       cursor: pointer;
     }
+
+
+    .remove-image-button:disabled {
+      opacity: 0.4;
+    }
+
 
     .image-meta {
       flex: 1;
@@ -474,14 +600,15 @@
       padding-top: 4px;
     }
 
+
     .image-meta-title {
       font-size: 13px;
+
       line-height: 1.4;
 
       font-weight: 750;
-
-      color: var(--text);
     }
+
 
     .image-info {
       margin-top: 5px;
@@ -489,8 +616,15 @@
       color: var(--muted);
 
       font-size: 11px;
+
       line-height: 1.5;
     }
+
+
+
+    /* ============================================================
+       INPUT ROW
+    ============================================================ */
 
     .composer-row {
       display: flex;
@@ -500,17 +634,16 @@
       gap: 8px;
     }
 
-    /* ============================================================
-       IMAGE BUTTON
-    ============================================================ */
 
     .image-button {
       flex: 0 0 48px;
 
       width: 48px;
+
       height: 48px;
 
       border: 0;
+
       border-radius: 14px;
 
       background: #eef1f5;
@@ -520,9 +653,11 @@
       cursor: pointer;
     }
 
+
     .image-button:active {
       transform: scale(0.96);
     }
+
 
     .image-button:disabled {
       opacity: 0.45;
@@ -530,17 +665,16 @@
       cursor: not-allowed;
     }
 
+
     .file-input {
       display: none;
     }
 
-    /* ============================================================
-       INPUT
-    ============================================================ */
 
     .input-wrap {
       flex: 1;
     }
+
 
     .question-input {
       display: block;
@@ -548,6 +682,7 @@
       width: 100%;
 
       min-height: 48px;
+
       max-height: 120px;
 
       padding: 12px 14px;
@@ -557,6 +692,7 @@
       background: #ffffff;
 
       border: 1.5px solid #b8c3d1;
+
       border-radius: 14px;
 
       outline: none;
@@ -564,17 +700,22 @@
       color: var(--text);
 
       font-family: inherit;
+
       font-size: 16px;
+
       line-height: 1.4;
     }
+
 
     .question-input:focus {
       border-color: var(--primary);
     }
 
+
     .question-input::placeholder {
       color: #98a2b3;
     }
+
 
     .question-input:disabled {
       background: #eef1f5;
@@ -584,17 +725,16 @@
       cursor: not-allowed;
     }
 
-    /* ============================================================
-       SEND
-    ============================================================ */
 
     .send-button {
       flex: 0 0 48px;
 
       width: 48px;
+
       height: 48px;
 
       border: 0;
+
       border-radius: 14px;
 
       background: var(--primary);
@@ -602,24 +742,30 @@
       color: #ffffff;
 
       font-size: 21px;
+
       font-weight: 850;
 
       cursor: pointer;
     }
 
+
     .send-button:hover {
       background: var(--primary-dark);
     }
 
+
     .send-button:active {
       transform: scale(0.96);
     }
+
 
     .send-button:disabled {
       background: #a8b3c5;
 
       cursor: not-allowed;
     }
+
+
 
     /* ============================================================
        MOBILE
@@ -629,24 +775,20 @@
 
       .page {
         padding-left: 14px;
+
         padding-right: 14px;
       }
+
 
       .header-title {
         font-size: 24px;
       }
 
+
       .intro-card {
         padding: 16px;
       }
 
-      .intro-title {
-        font-size: 17px;
-      }
-
-      .intro-action-text {
-        font-size: 14px;
-      }
 
       .bubble {
         max-width: 88%;
@@ -660,9 +802,16 @@
 
 </head>
 
+
 <body>
 
+
   <main class="page">
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
 
     <header class="header">
 
@@ -676,6 +825,11 @@
 
     </header>
 
+
+
+    <!-- ========================================================
+         INTRO
+    ========================================================= -->
 
     <section
       id="introCard"
@@ -749,6 +903,11 @@
     </section>
 
 
+
+    <!-- ========================================================
+         CHAT
+    ========================================================= -->
+
     <section
       id="chatArea"
       class="chat-area"
@@ -762,7 +921,9 @@
       正在初始化 LIFF……
     </div>
 
+
   </main>
+
 
 
   <!-- ==========================================================
@@ -770,6 +931,7 @@
   =========================================================== -->
 
   <div class="composer">
+
 
     <div class="composer-inner">
 
@@ -783,15 +945,15 @@
         class="image-preview-area"
       >
 
-        <div
-          class="image-preview-wrap"
-        >
+
+        <div class="image-preview-wrap">
 
           <img
             id="imagePreview"
             class="image-preview"
             alt="題目圖片預覽"
           />
+
 
           <button
             id="removeImageButton"
@@ -818,14 +980,17 @@
 
         </div>
 
+
       </div>
 
 
+
       <!-- ======================================================
-           INPUT ROW
+           INPUT
       ======================================================= -->
 
       <div class="composer-row">
+
 
         <button
           id="imageButton"
@@ -871,16 +1036,25 @@
           ➤
         </button>
 
+
       </div>
+
 
     </div>
 
+
   </div>
+
 
 
   <script>
 
     "use strict";
+
+
+    console.log(
+      "Ask AI HTML version: 2026.08.20-1112-image-live"
+    );
 
 
     // ============================================================
@@ -903,6 +1077,7 @@
       "sb_publishable_VtPQzTC8Cw-ccxC5bSzIuw_nHVbTO3Q";
 
 
+
     // ============================================================
     // IMAGE SETTINGS
     // ============================================================
@@ -914,23 +1089,24 @@
     ];
 
 
-    // 原图先挡极端大文件。
+    // 原图先挡过大的异常文件。
     const MAX_ORIGINAL_IMAGE_BYTES =
       12 * 1024 * 1024;
 
 
-    // 真正准备送后端的图片最大 3 MB。
+    // 和 Edge 一致。
     const MAX_COMPRESSED_IMAGE_BYTES =
       3 * 1024 * 1024;
 
 
-    // 长边最大 1800px。
+    // 图片最长边。
     const MAX_IMAGE_LONG_SIDE =
       1800;
 
 
     const JPEG_QUALITY =
       0.82;
+
 
 
     // ============================================================
@@ -953,19 +1129,26 @@
       null;
 
 
+    // Chat bubble 已经使用中的 Object URL。
+    // 不可以发送后立即 revoke，否则聊天图片会消失。
+    const chatImageUrls =
+      [];
+
+
     // selectedImage:
     //
     // {
-    //   fileName,
-    //   mimeType,
-    //   originalBytes,
-    //   compressedBytes,
-    //   width,
-    //   height,
-    //   blob,
-    //   base64,
+    //   fileName
+    //   mimeType
+    //   originalBytes
+    //   compressedBytes
+    //   width
+    //   height
+    //   blob
+    //   base64
     //   previewUrl
     // }
+
 
 
     // ============================================================
@@ -1038,8 +1221,9 @@
       );
 
 
+
     // ============================================================
-    // UI STATE
+    // UI
     // ============================================================
 
     function enableComposer() {
@@ -1064,9 +1248,16 @@
         false;
 
 
+      removeImageButton.disabled =
+        false;
+
+
       questionInput.placeholder =
-        "輸入你的問題……";
+        selectedImage
+          ? "可以補一句：例如「為什麼 B 不對？」"
+          : "輸入你的問題……";
     }
+
 
 
     function disableComposer(
@@ -1085,10 +1276,15 @@
         true;
 
 
+      removeImageButton.disabled =
+        true;
+
+
       questionInput.placeholder =
         message ||
         "目前無法使用";
     }
+
 
 
     function setSendingState(
@@ -1129,15 +1325,12 @@
         "➤";
 
 
-      removeImageButton.disabled =
-        false;
-
-
       enableComposer();
 
 
       questionInput.focus();
     }
+
 
 
     function showStatus(
@@ -1156,8 +1349,39 @@
     }
 
 
+
+    function restoreConnectedStatus() {
+
+      if (
+        !currentUser
+      ) {
+
+        return;
+      }
+
+
+      const roleText =
+        currentUser.role ===
+        "teacher"
+          ? "老師"
+          : "學生";
+
+
+      const displayName =
+        currentUser.nickname ||
+        currentUser.full_name ||
+        "使用者";
+
+
+      showStatus(
+        `LIFF 已連線｜${roleText}：${displayName}`
+      );
+    }
+
+
+
     // ============================================================
-    // CHAT UI
+    // CHAT
     // ============================================================
 
     function scrollToLatest() {
@@ -1166,6 +1390,7 @@
         () => {
 
           window.scrollTo({
+
             top:
               document.body.scrollHeight,
 
@@ -1174,9 +1399,11 @@
           });
 
         },
+
         50
       );
     }
+
 
 
     function addMessage(
@@ -1223,6 +1450,7 @@
 
       return row;
     }
+
 
 
     function addUserImageMessage(
@@ -1273,7 +1501,9 @@
       );
 
 
-      if (text) {
+      if (
+        text
+      ) {
 
         const caption =
           document.createElement(
@@ -1310,6 +1540,7 @@
 
       return row;
     }
+
 
 
     function addThinkingMessage() {
@@ -1351,7 +1582,7 @@
 
 
       label.textContent =
-        "AI 正在想";
+        "AI 正在看題";
 
 
       thinking.appendChild(
@@ -1403,6 +1634,7 @@
     }
 
 
+
     // ============================================================
     // FETCH JSON
     // ============================================================
@@ -1416,6 +1648,7 @@
       const response =
         await fetch(
           url,
+
           {
             method:
               "POST",
@@ -1483,8 +1716,9 @@
     }
 
 
+
     // ============================================================
-    // GET USER
+    // LOAD USER
     // ============================================================
 
     async function loadAskAiUser(
@@ -1493,6 +1727,7 @@
 
       const result =
         await postJson(
+
           GET_ASK_AI_USER_URL,
 
           {
@@ -1508,12 +1743,15 @@
     }
 
 
+
     // ============================================================
-    // TEXT ASK AI
+    // ASK AI
+    // TEXT + IMAGE
     // ============================================================
 
-    async function askAiText(
-      text
+    async function askAi(
+      text,
+      image
     ) {
 
       if (
@@ -1526,20 +1764,43 @@
       }
 
 
+      const payload = {
+
+        id_token:
+          currentIdToken,
+
+        message:
+          text || "",
+      };
+
+
+      // ==========================================================
+      // IMAGE
+      // ==========================================================
+
+      if (
+        image
+      ) {
+
+        payload.image_base64 =
+          image.base64;
+
+
+        payload.image_mime_type =
+          image.mimeType;
+      }
+
+
       return await postJson(
+
         ASK_AI_URL,
 
-        {
-          id_token:
-            currentIdToken,
-
-          message:
-            text,
-        },
+        payload,
 
         "問 AI"
       );
     }
+
 
 
     // ============================================================
@@ -1576,19 +1837,23 @@
     );
 
 
+
     // ============================================================
-    // FILE CHANGE
+    // FILE SELECT
     // ============================================================
 
     fileInput.addEventListener(
       "change",
+
       async () => {
 
         const file =
           fileInput.files?.[0];
 
 
-        if (!file) {
+        if (
+          !file
+        ) {
 
           return;
         }
@@ -1616,14 +1881,18 @@
               ? error.message
               : String(error)
           );
+
+
+          restoreConnectedStatus();
         }
 
       }
     );
 
 
+
     // ============================================================
-    // HANDLE SELECTED IMAGE
+    // HANDLE IMAGE
     // ============================================================
 
     async function handleSelectedImage(
@@ -1631,7 +1900,7 @@
     ) {
 
       // ----------------------------------------------------------
-      // TYPE
+      // MIME
       // ----------------------------------------------------------
 
       if (
@@ -1662,7 +1931,7 @@
 
 
       showStatus(
-        "正在處理圖片……"
+        "正在壓縮題目圖片……"
       );
 
 
@@ -1701,7 +1970,7 @@
         );
 
 
-      // 清旧图。
+      // 清掉尚未送出的旧图。
       clearSelectedImage();
 
 
@@ -1718,8 +1987,9 @@
           "question.jpg",
 
 
+        // 我们压缩输出统一 JPEG。
         mimeType:
-          compressed.blob.type,
+          "image/jpeg",
 
 
         originalBytes:
@@ -1751,10 +2021,6 @@
       };
 
 
-      // ----------------------------------------------------------
-      // PREVIEW
-      // ----------------------------------------------------------
-
       imagePreview.src =
         previewUrl;
 
@@ -1767,14 +2033,20 @@
       imageInfo.textContent =
         [
           `${compressed.width} × ${compressed.height}`,
+
           formatBytes(
-            selectedImage.compressedBytes
+            compressed.blob.size
           ),
         ].join("｜");
 
 
+      questionInput.placeholder =
+        "可以補一句，例如「這題怎麼算？」";
+
+
       restoreConnectedStatus();
     }
+
 
 
     // ============================================================
@@ -1785,122 +2057,126 @@
       file
     ) {
 
-      let imageBitmap;
-
-
       try {
 
-        imageBitmap =
+        const bitmap =
           await createImageBitmap(
             file
           );
 
-      } catch {
 
-        // 某些旧版 iOS WebView 对 createImageBitmap 支援不完整。
-        // 使用 Image + Object URL fallback。
+        const resized =
+          calculateResizedDimensions(
+
+            bitmap.width,
+
+            bitmap.height
+          );
+
+
+        const canvas =
+          document.createElement(
+            "canvas"
+          );
+
+
+        canvas.width =
+          resized.width;
+
+
+        canvas.height =
+          resized.height;
+
+
+        const ctx =
+          canvas.getContext(
+            "2d"
+          );
+
+
+        if (
+          !ctx
+        ) {
+
+          bitmap.close();
+
+
+          throw new Error(
+            "手機無法建立圖片處理畫布。"
+          );
+        }
+
+
+        // 透明 PNG 转 JPEG 时避免黑底。
+        ctx.fillStyle =
+          "#ffffff";
+
+
+        ctx.fillRect(
+
+          0,
+
+          0,
+
+          resized.width,
+
+          resized.height
+        );
+
+
+        ctx.drawImage(
+
+          bitmap,
+
+          0,
+
+          0,
+
+          resized.width,
+
+          resized.height
+        );
+
+
+        bitmap.close();
+
+
+        const blob =
+          await canvasToJpegBlob(
+            canvas
+          );
+
+
+        return {
+
+          blob,
+
+          width:
+            resized.width,
+
+          height:
+            resized.height,
+        };
+
+
+      } catch (error) {
+
+        console.log(
+          "createImageBitmap fallback:",
+          error
+        );
+
 
         return await compressImageWithHtmlImage(
           file
         );
       }
-
-
-      let width =
-        imageBitmap.width;
-
-
-      let height =
-        imageBitmap.height;
-
-
-      const resized =
-        calculateResizedDimensions(
-          width,
-          height
-        );
-
-
-      width =
-        resized.width;
-
-
-      height =
-        resized.height;
-
-
-      const canvas =
-        document.createElement(
-          "canvas"
-        );
-
-
-      canvas.width =
-        width;
-
-
-      canvas.height =
-        height;
-
-
-      const ctx =
-        canvas.getContext(
-          "2d"
-        );
-
-
-      if (!ctx) {
-
-        imageBitmap.close();
-
-
-        throw new Error(
-          "手機無法建立圖片處理畫布。"
-        );
-      }
-
-
-      // 白底，避免透明 PNG 转 JPEG 后出现黑底。
-      ctx.fillStyle =
-        "#ffffff";
-
-
-      ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-
-      ctx.drawImage(
-        imageBitmap,
-        0,
-        0,
-        width,
-        height
-      );
-
-
-      imageBitmap.close();
-
-
-      const blob =
-        await canvasToJpegBlob(
-          canvas
-        );
-
-
-      return {
-        blob,
-        width,
-        height,
-      };
     }
 
 
+
     // ============================================================
-    // FALLBACK IMAGE COMPRESS
+    // HTML IMAGE FALLBACK
     // ============================================================
 
     async function compressImageWithHtmlImage(
@@ -1945,7 +2221,9 @@
 
         const resized =
           calculateResizedDimensions(
+
             img.naturalWidth,
+
             img.naturalHeight
           );
 
@@ -1970,7 +2248,9 @@
           );
 
 
-        if (!ctx) {
+        if (
+          !ctx
+        ) {
 
           throw new Error(
             "手機無法建立圖片處理畫布。"
@@ -1983,18 +2263,27 @@
 
 
         ctx.fillRect(
+
           0,
+
           0,
+
           resized.width,
+
           resized.height
         );
 
 
         ctx.drawImage(
+
           img,
+
           0,
+
           0,
+
           resized.width,
+
           resized.height
         );
 
@@ -2006,9 +2295,12 @@
 
 
         return {
+
           blob,
+
           width:
             resized.width,
+
           height:
             resized.height,
         };
@@ -2021,6 +2313,7 @@
         );
       }
     }
+
 
 
     // ============================================================
@@ -2100,8 +2393,9 @@
     }
 
 
+
     // ============================================================
-    // CANVAS TO JPEG
+    // CANVAS → JPEG
     // ============================================================
 
     function canvasToJpegBlob(
@@ -2112,9 +2406,12 @@
         (resolve, reject) => {
 
           canvas.toBlob(
+
             (result) => {
 
-              if (!result) {
+              if (
+                !result
+              ) {
 
                 reject(
                   new Error(
@@ -2130,16 +2427,19 @@
               resolve(
                 result
               );
-
             },
+
 
             "image/jpeg",
 
+
             JPEG_QUALITY
           );
+
         }
       );
     }
+
 
 
     // ============================================================
@@ -2210,9 +2510,11 @@
           reader.readAsDataURL(
             blob
           );
+
         }
       );
     }
+
 
 
     // ============================================================
@@ -2225,7 +2527,8 @@
 
       const value =
         Number(
-          bytes || 0
+          bytes ||
+          0
         );
 
 
@@ -2269,8 +2572,9 @@
     }
 
 
+
     // ============================================================
-    // CLEAR IMAGE
+    // CLEAR SELECTED IMAGE
     // ============================================================
 
     function clearSelectedImage() {
@@ -2304,7 +2608,57 @@
 
       fileInput.value =
         "";
+
+
+      if (
+        currentUser &&
+        !requestInProgress
+      ) {
+
+        questionInput.placeholder =
+          "輸入你的問題……";
+      }
     }
+
+
+
+    // ============================================================
+    // CLEAR AFTER IMAGE WAS SENT
+    // ============================================================
+    //
+    // 注意：
+    // 图片已经进入 chat bubble 后，
+    // 原 previewUrl 不能 revoke。
+    //
+    // ============================================================
+
+    function clearSelectedImageAfterSend() {
+
+      selectedImage =
+        null;
+
+
+      imagePreview.src =
+        "";
+
+
+      imagePreviewArea.classList.remove(
+        "visible"
+      );
+
+
+      imageInfo.textContent =
+        "";
+
+
+      fileInput.value =
+        "";
+
+
+      questionInput.placeholder =
+        "輸入你的問題……";
+    }
+
 
 
     removeImageButton.addEventListener(
@@ -2324,41 +2678,9 @@
     );
 
 
-    // ============================================================
-    // RESTORE STATUS
-    // ============================================================
-
-    function restoreConnectedStatus() {
-
-      if (
-        !currentUser
-      ) {
-
-        return;
-      }
-
-
-      const roleText =
-        currentUser.role ===
-        "teacher"
-          ? "老師"
-          : "學生";
-
-
-      const displayName =
-        currentUser.nickname ||
-        currentUser.full_name ||
-        "使用者";
-
-
-      showStatus(
-        `LIFF 已連線｜${roleText}：${displayName}`
-      );
-    }
-
 
     // ============================================================
-    // LIFF INITIALIZATION
+    // LIFF INIT
     // ============================================================
 
     async function initializeLiff() {
@@ -2385,10 +2707,11 @@
       try {
 
         // --------------------------------------------------------
-        // INIT
+        // LIFF
         // --------------------------------------------------------
 
         await liff.init({
+
           liffId:
             LIFF_ID,
         });
@@ -2415,7 +2738,7 @@
 
 
         // --------------------------------------------------------
-        // TOKEN
+        // ID TOKEN
         // --------------------------------------------------------
 
         currentIdToken =
@@ -2446,10 +2769,6 @@
             currentIdToken
           );
 
-
-        // --------------------------------------------------------
-        // READY
-        // --------------------------------------------------------
 
         restoreConnectedStatus();
 
@@ -2492,8 +2811,9 @@
     }
 
 
+
     // ============================================================
-    // SEND MESSAGE
+    // SEND
     // ============================================================
 
     async function sendMessage() {
@@ -2562,83 +2882,48 @@
 
 
       // ==========================================================
-      // IMAGE FLOW
+      // SNAPSHOT
+      // ==========================================================
+
+      const imageSnapshot =
+        selectedImage
+          ? {
+              ...selectedImage
+            }
+          : null;
+
+
+      // ==========================================================
+      // USER BUBBLE
       // ==========================================================
 
       if (
-        selectedImage
+        imageSnapshot
       ) {
 
-        // 保留 chat bubble 用的 preview URL。
-        const imageSnapshot = {
-          ...selectedImage
-        };
+        // 保留这个 URL，直到整个页面关闭。
+        chatImageUrls.push(
+          imageSnapshot.previewUrl
+        );
 
 
         addUserImageMessage(
+
           imageSnapshot.previewUrl,
+
           text
         );
 
 
-        questionInput.value =
-          "";
+        clearSelectedImageAfterSend();
 
-
-        hideIntroCard();
-
+      } else {
 
         addMessage(
-          "system",
-          [
-            "圖片已成功選取並壓縮。",
-            "",
-            `尺寸：${imageSnapshot.width} × ${imageSnapshot.height}`,
-            `大小：${formatBytes(imageSnapshot.compressedBytes)}`,
-            "",
-            "下一步接上圖片版 ask-ai 後端後，就會直接送給 Gemini 看題。"
-          ].join("\n")
+          "user",
+          text
         );
-
-
-        // 注意：
-        // addUserImageMessage 的 img 仍在使用这个 URL，
-        // 所以这里不能立刻 revoke。
-        //
-        // 只清 composer state。
-        selectedImage =
-          null;
-
-
-        imagePreview.src =
-          "";
-
-
-        imagePreviewArea.classList.remove(
-          "visible"
-        );
-
-
-        imageInfo.textContent =
-          "";
-
-
-        fileInput.value =
-          "";
-
-
-        return;
       }
-
-
-      // ==========================================================
-      // TEXT FLOW
-      // ==========================================================
-
-      addMessage(
-        "user",
-        text
-      );
 
 
       questionInput.value =
@@ -2647,6 +2932,10 @@
 
       hideIntroCard();
 
+
+      // ==========================================================
+      // THINKING
+      // ==========================================================
 
       const thinkingRow =
         addThinkingMessage();
@@ -2659,14 +2948,25 @@
 
       try {
 
+        // ========================================================
+        // CALL EDGE
+        // ========================================================
+
         const result =
-          await askAiText(
-            text
+          await askAi(
+
+            text,
+
+            imageSnapshot
           );
 
 
         thinkingRow.remove();
 
+
+        // ========================================================
+        // ANSWER
+        // ========================================================
 
         const answer =
           String(
@@ -2697,15 +2997,34 @@
         );
 
 
-        if (
-          result.usage
-        ) {
+        console.log(
+          "Status:",
+          result.status
+        );
 
-          console.log(
-            "Token usage:",
-            result.usage
-          );
-        }
+
+        console.log(
+          "Input type:",
+          result.input_type
+        );
+
+
+        console.log(
+          "Subject:",
+          result.subject
+        );
+
+
+        console.log(
+          "Readable:",
+          result.readable
+        );
+
+
+        console.log(
+          "Usage:",
+          result.usage
+        );
 
 
       } catch (error) {
@@ -2738,6 +3057,7 @@
     }
 
 
+
     // ============================================================
     // HIDE INTRO
     // ============================================================
@@ -2762,6 +3082,7 @@
     }
 
 
+
     // ============================================================
     // EVENTS
     // ============================================================
@@ -2774,6 +3095,7 @@
 
     questionInput.addEventListener(
       "keydown",
+
       (event) => {
 
         if (
@@ -2791,6 +3113,7 @@
     );
 
 
+
     // ============================================================
     // START
     // ============================================================
@@ -2801,14 +3124,17 @@
     );
 
 
+
     // ============================================================
     // CLEANUP
     // ============================================================
 
     window.addEventListener(
       "beforeunload",
+
       () => {
 
+        // 尚未发送的图。
         if (
           selectedImage?.previewUrl
         ) {
@@ -2817,10 +3143,29 @@
             selectedImage.previewUrl
           );
         }
+
+
+        // 已经显示在 chat bubble 的图。
+        for (
+          const url of
+          chatImageUrls
+        ) {
+
+          try {
+
+            URL.revokeObjectURL(
+              url
+            );
+
+          } catch {
+            // ignore
+          }
+        }
       }
     );
 
   </script>
+
 
 </body>
 
