@@ -14,7 +14,7 @@
 
   <meta
     name="app-version"
-    content="2026.08.20-1610-conversation"
+    content="2026.08.21-1431-front-lock"
   />
 
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -717,6 +717,8 @@
     .send-button:disabled {
       background: #a8b3c5;
       cursor: not-allowed;
+      opacity: 0.72;
+      transform: none;
     }
 
 
@@ -990,7 +992,7 @@
 
 
     console.log(
-      "Ask AI HTML version: 2026.08.20-1610-conversation"
+      "Ask AI HTML version: 2026.08.21-1431-front-lock"
     );
 
 
@@ -2746,6 +2748,11 @@
 
     async function sendMessage() {
 
+      // ==========================================================
+      // 第一層防連點：
+      // 只要上一筆還在處理，就完全忽略後續 click / Enter。
+      // ==========================================================
+
       if (
         requestInProgress
       ) {
@@ -2810,54 +2817,64 @@
 
 
       // ==========================================================
-      // USER BUBBLE
+      // 立即鎖定：
+      // 驗證完成後，在任何畫面更新與 API 呼叫之前先鎖。
+      // 這樣手機連點、快速按 Enter 都不會送出第二次。
       // ==========================================================
-
-      if (
-        imageSnapshot
-      ) {
-
-        chatImageUrls.push(
-          imageSnapshot.previewUrl
-        );
-
-
-        addUserImageMessage(
-
-          imageSnapshot.previewUrl,
-
-          text
-        );
-
-
-        clearSelectedImageAfterSend();
-
-      } else {
-
-        addMessage(
-          "user",
-          text
-        );
-      }
-
-
-      questionInput.value =
-        "";
-
-
-      hideIntroCard();
-
-
-      const thinkingRow =
-        addThinkingMessage();
-
 
       setSendingState(
         true
       );
 
 
+      let thinkingRow =
+        null;
+
+
       try {
+
+        // ========================================================
+        // USER BUBBLE
+        // ========================================================
+
+        if (
+          imageSnapshot
+        ) {
+
+          chatImageUrls.push(
+            imageSnapshot.previewUrl
+          );
+
+
+          addUserImageMessage(
+
+            imageSnapshot.previewUrl,
+
+            text
+          );
+
+
+          clearSelectedImageAfterSend();
+
+        } else {
+
+          addMessage(
+            "user",
+            text
+          );
+        }
+
+
+        questionInput.value =
+          "";
+
+
+        hideIntroCard();
+
+
+        thinkingRow =
+          addThinkingMessage();
+
 
         // ========================================================
         // SEND CURRENT CONVERSATION ID
@@ -2874,7 +2891,15 @@
           );
 
 
-        thinkingRow.remove();
+        if (
+          thinkingRow
+        ) {
+
+          thinkingRow.remove();
+
+          thinkingRow =
+            null;
+        }
 
 
         const answer =
@@ -2916,7 +2941,7 @@
 
         } else {
 
-          // rejected / unreadable 等结果不继续 conversation
+          // rejected / unreadable 等結果不繼續 conversation
           setConversationId(
             null
           );
@@ -2943,7 +2968,15 @@
 
       } catch (error) {
 
-        thinkingRow.remove();
+        if (
+          thinkingRow
+        ) {
+
+          thinkingRow.remove();
+
+          thinkingRow =
+            null;
+        }
 
 
         console.error(
@@ -2964,6 +2997,7 @@
 
       } finally {
 
+        // 成功或失敗都解除前端鎖，讓學生可以繼續下一次操作。
         setSendingState(
           false
         );
